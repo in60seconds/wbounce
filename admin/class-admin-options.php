@@ -79,6 +79,7 @@ class Wbounce_Admin_Options
             '_autofire',
             '_timer',
             '_expire',
+            '_bounce',
             '_hesitation',
             '_cookieexpire',
             '_sitewide',
@@ -268,6 +269,12 @@ class Wbounce_Admin_Options
 						        <th scope="row"><?php _e('Set an expiry time<br><span class="description thin">&hellip; after which wBounce is not fired anymore.</span>', WBOUNCE_TD); ?></th>
 						        <td>
 						        	<input type="number" id="<?echo WBOUNCE_OPTION_KEY; ?>_expire" name="<?php echo WBOUNCE_OPTION_KEY; ?>_expire" placeholder="milliseconds" value="<?php echo get_option(WBOUNCE_OPTION_KEY.'_expire'); ?>" /><br><label for="<?echo WBOUNCE_OPTION_KEY; ?>_expire"><?php _e('By default, wBounce will fire regardless of time passed. If you want to disable wBounce after a certain amount of time, pass in a number in milliseconds after which wBounce will be disabled.', WBOUNCE_TD); ?></label>
+						        </td>
+					        </tr>
+					        <tr valign="top">
+						        <th scope="row"><?php esc_html_e('Fire only on first page', WBOUNCE_TD); ?></th>
+						        <td>
+                      <input id="<?php echo WBOUNCE_OPTION_KEY; ?>_bounce" name="<?php echo WBOUNCE_OPTION_KEY; ?>_bounce" type="checkbox" value="1" <?php checked('1', get_option(WBOUNCE_OPTION_KEY.'_bounce')); ?> /> <label for="<?php echo WBOUNCE_OPTION_KEY; ?>_bounce"><?php _e('By default, wBounce will fire on every page where it\'s enabled. You might want to fire wBounce only on a "real" bounce: when the visitor tries to leave the first page of his or her session.', WBOUNCE_TD); ?></label>
 						        </td>
 					        </tr>
 					        <tr valign="top">

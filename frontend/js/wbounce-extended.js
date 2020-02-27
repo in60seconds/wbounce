@@ -86,6 +86,7 @@
         // Timer (Set a min time before wBounce fires)
         timer: parseInt(WBOUNCE_CONFIG.timer, 10),
         expire: parseInt(WBOUNCE_CONFIG.expire, 10),
+        bounce: WBOUNCE_CONFIG.bounce,
         sensitivity: parseInt(WBOUNCE_CONFIG.sensitivity, 10)
       };
 

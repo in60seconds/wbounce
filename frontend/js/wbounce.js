@@ -16,6 +16,7 @@
       timer = setDefault(config.timer, 1000),
       delay = setDefault(config.delay, 0),
       expire = setDefault(config.expire, false),
+      bounce = setDefault(config.bounce, false),
       callback = config.callback || function() {},
       cookieExpire = setDefaultCookieExpire(config.cookieExpire) || "",
       cookieDomain = config.cookieDomain
@@ -29,7 +30,9 @@
       _html = document.documentElement;
 
     function setDefault(_property, _default) {
-      return typeof _property === "undefined" ? _default : _property;
+      return typeof _property === "undefined" || isNaN(_property)
+        ? _default
+        : _property;
     }
 
     function setDefaultCookieExpire(days) {
@@ -44,6 +47,10 @@
 
     function attachOuiBounce() {
       if (isDisabled()) {
+        return;
+      }
+
+      if (bounce && hasSession()) {
         return;
       }
 
@@ -103,6 +110,13 @@
 
     function isDisabled() {
       return checkCookieValue(cookieName, "true") && !aggressive;
+    }
+
+    function hasSession() {
+      var session = window.sessionStorage.getItem(cookieName + "SessionStart");
+      if (!session)
+        window.sessionStorage.setItem(cookieName + "SessionStart", new Date());
+      return session && !aggressive;
     }
 
     // You can use ouibounce without passing an element

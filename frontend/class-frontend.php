@@ -115,6 +115,7 @@ class Wbounce_Frontend
         "exitAnimation" => $this->is_animation_none('exit') ? false : $this->get_option("exit_animation"),
         "timer" => $this->get_option("timer"),
         "expire" => $this->get_option("expire"),
+        "bounce" => $this->get_option("bounce"),
         "sensitivity" => $this->get_option("sensitivity"),
         "cookieExpire" => $this->get_option("cookieexpire"),
         "cookieDomain" => $this->get_option("cookiedomain"),
