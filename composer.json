@@ -1,0 +1,7 @@
+{
+    "name": "in60seconds/wbounce",
+    "description": "wBounce improves bounce rate to boost conversions and sales. The free alternative to Bounce Exchange for WordPress. WordPress plugin.",
+    "type": "wordpress-plugin",
+    "license": "See lincense.txt",
+    "require": {}
+}

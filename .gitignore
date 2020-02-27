@@ -16,3 +16,4 @@ sitemap.xml.gz
 *.sass-cache
 *.scssc
 node_modules/
+/vendor/
