@@ -1,14 +1,14 @@
 /*global jQuery, __gaTracker, ga, ouibounce */
-(function ($) {
-  'use strict';
+(function($) {
+  "use strict";
 
   if (!$) {
-    console.warn('[wBounce] Required dependency jQuery isn\'t defined.')
+    console.warn("[wBounce] Required dependency jQuery isn't defined.");
     return;
   }
 
-  if (typeof __gaTracker === 'function') {
-    __gaTracker(function () {
+  if (typeof __gaTracker === "function") {
+    __gaTracker(function() {
       window.ga = __gaTracker;
     });
   }
@@ -19,20 +19,20 @@
    */
   function isIE() {
     var myNav = navigator.userAgent.toLowerCase();
-    return (myNav.indexOf('msie') !== -1) ? parseInt(myNav.split('msie')[1], 10) : false;
+    return myNav.indexOf("msie") !== -1
+      ? parseInt(myNav.split("msie")[1], 10)
+      : false;
   }
 
   function isInteger(x) {
-    return (typeof x === 'number') && (x % 1 === 0);
+    return typeof x === "number" && x % 1 === 0;
   }
 
-  $(function () {
-    var WBOUNCE_CONFIG = JSON.parse($('#wbounce-config').text()),
-
-      wBounceModal = document.getElementById('wbounce-modal'),
-      wBounceModalSub = document.getElementById('wbounce-modal-sub'),
-      wBounceModalFlex = document.getElementById('wbounce-modal-flex'),
-
+  $(function() {
+    var WBOUNCE_CONFIG = JSON.parse($("#wbounce-config").text()),
+      wBounceModal = document.getElementById("wbounce-modal"),
+      wBounceModalSub = document.getElementById("wbounce-modal-sub"),
+      wBounceModalFlex = document.getElementById("wbounce-modal-flex"),
       // Assuming, if (animation !== 'none' or IE > 9)
       isAnimationIn = false,
       isAnimationOut = false,
@@ -46,19 +46,21 @@
     function sendAnalyticsEvent(action) {
       if (WBOUNCE_CONFIG.isAnalyticsEnabled) {
         // Track event in Google Analytics
-        window.ga && window.ga('send', 'event', 'wBounce', action, document.URL);
+        window.ga &&
+          window.ga("send", "event", "wBounce", action, document.URL);
         // Track event in Piwik
-        window._paq && window._paq.push(['trackEvent', 'wBounce', action, document.URL]);
+        window._paq &&
+          window._paq.push(["trackEvent", "wBounce", action, document.URL]);
       }
     }
 
     if (WBOUNCE_CONFIG.openAnimation) {
-      animationInClass = 'animated ' + WBOUNCE_CONFIG.openAnimation;
+      animationInClass = "animated " + WBOUNCE_CONFIG.openAnimation;
       isAnimationIn = true;
     }
 
     if (WBOUNCE_CONFIG.exitAnimation) {
-      animationOutClass = 'animated ' + WBOUNCE_CONFIG.exitAnimation;
+      animationOutClass = "animated " + WBOUNCE_CONFIG.exitAnimation;
       isAnimationOut = true;
     }
 
@@ -66,13 +68,13 @@
     if (isIE() && isIE() < 10) {
       isAnimationIn = false;
       isAnimationOut = false;
-      animationOutClass = 'belowIE10';
+      animationOutClass = "belowIE10";
       $(wBounceModalSub).addClass(animationOutClass);
     } else {
-      $(wBounceModalFlex).addClass('wbounce-modal-flex-activated');
+      $(wBounceModalFlex).addClass("wbounce-modal-flex-activated");
     }
 
-    if (typeof ouibounce !== 'undefined' && $.isFunction(ouibounce)) {
+    if (typeof ouibounce !== "undefined" && $.isFunction(ouibounce)) {
       OUIBOUNCE_CONFIG = {
         // Aggressive Mode
         aggressive: WBOUNCE_CONFIG.isAggressive,
@@ -83,6 +85,7 @@
         cookieDomain: WBOUNCE_CONFIG.cookieDomain,
         // Timer (Set a min time before wBounce fires)
         timer: parseInt(WBOUNCE_CONFIG.timer, 10),
+        expire: parseInt(WBOUNCE_CONFIG.expire, 10),
         sensitivity: parseInt(WBOUNCE_CONFIG.sensitivity, 10)
       };
 
@@ -99,14 +102,14 @@
       }
 
       // Callback
-      OUIBOUNCE_CONFIG.callback = function () {
+      OUIBOUNCE_CONFIG.callback = function() {
         sendAnalyticsEvent("fired");
         if (isAnimationIn) {
           $(wBounceModalSub)
             .addClass(animationInClass)
             .one(
-              'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-              function () {
+              "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+              function() {
                 $(this).removeClass(animationInClass);
               }
             );
@@ -127,34 +130,34 @@
       $(wBounceModalSub)
         .addClass(animationOutClass)
         .one(
-          'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-          function () {
+          "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+          function() {
             $(this).removeClass(animationOutClass);
             $wBounceModal.hide();
           }
         );
     }
 
-    $wBounceModal.on('click', function () {
+    $wBounceModal.on("click", function() {
       hidePopup();
       sendAnalyticsEvent("hidden_outside");
     });
 
-    $wBounceModal.find('.modal-close').on('click', function () {
+    $wBounceModal.find(".modal-close").on("click", function() {
       hidePopup();
       sendAnalyticsEvent("hidden_close");
     });
 
-    $wBounceModal.find('.modal-footer').on('click', function () {
+    $wBounceModal.find(".modal-footer").on("click", function() {
       hidePopup();
       sendAnalyticsEvent("hidden_footer");
     });
 
-    $(wBounceModalSub).on('click', function (e) {
+    $(wBounceModalSub).on("click", function(e) {
       e.stopPropagation();
     });
 
-    $(document).keyup(function (e) {
+    $(document).keyup(function(e) {
       if (e.which === 27 && $wBounceModal.is(":visible")) {
         hidePopup();
         sendAnalyticsEvent("hidden_escape");
@@ -179,4 +182,4 @@
       handleAutoFire(autoFire);
     }
   });
-}(window.jQuery || window.$));
+})(window.jQuery || window.$);
